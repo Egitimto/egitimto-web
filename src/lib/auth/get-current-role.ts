@@ -9,6 +9,10 @@ export async function getCurrentRole(): Promise<Role | null> {
 
   if (!user) return null
 
-  const { data } = await supabase.rpc('current_user_role')
+  const { data, error } = await supabase.rpc('current_user_role')
+  if (error) {
+    console.error('getCurrentRole: current_user_role RPC failed', error)
+    return null
+  }
   return (data as Role) ?? null
 }
