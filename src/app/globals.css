@@ -1,26 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #FF6B35;
+  --primary-light: #FF8C42;
+  --primary-dark: #E85A2A;
+  --secondary: #2C3E50;
+  --cream-start: #F5F5F0;
+  --cream-end: #E8E8E3;
+  --dark: #212529;
+  --body-text: #343A40;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-dark: var(--dark);
+  --color-body-text: var(--body-text);
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--body-text);
+  font-family: var(--font-sans), sans-serif;
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-dark) 100%);
+}
+
+.gradient-cream {
+  background: linear-gradient(135deg, var(--cream-start) 0%, var(--cream-end) 100%);
 }
