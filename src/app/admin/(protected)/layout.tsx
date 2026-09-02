@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getCurrentRole } from '@/lib/auth/get-current-role'
 import { canAccessSection, type AdminSection } from '@/lib/auth/roles'
-import { signOut } from './actions'
+import { signOut } from '../actions'
 
 const NAV_ITEMS: { href: string; label: string; section: AdminSection }[] = [
   { href: '/admin/haberler', label: 'Haberler', section: 'haberler' },
