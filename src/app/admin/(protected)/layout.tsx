@@ -24,8 +24,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 shrink-0 border-r border-neutral-200 bg-white p-4">
-        <p className="mb-4 font-display text-lg font-bold text-dark">Yönetim Paneli</p>
-        <nav className="space-y-1">
+        <h1 className="mb-4 font-display text-lg font-bold text-dark">Yönetim Paneli</h1>
+        <nav className="space-y-1" aria-label="Yönetim paneli menüsü">
           {visibleItems.map((item) => (
             <Link
               key={item.href}

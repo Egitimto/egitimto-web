@@ -15,7 +15,9 @@ export default async function LoginPage({
       >
         <h1 className="font-display text-2xl font-bold text-dark">Yönetim Paneli Girişi</h1>
         {error && (
-          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
+          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+            E-posta veya şifre hatalı.
+          </p>
         )}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-body-text">
