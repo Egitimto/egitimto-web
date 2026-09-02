@@ -77,7 +77,7 @@ Footer (site geneli, her sayfada):
 - İletişim bilgileri (adres, e-posta, kütük no)
 ```
 
-**Ana sayfa "Neler Yapıyoruz?" kartları güncellemesi:** Mevcut 4 kart (Mobile App, Aylık Bülten, Destek Ol, İletişim) → Aylık Bülten kartı kaldırıldı (bülten artık normal bir haber olarak yayınlanacak). Yerine **Duyurular** kartı eklenmesi öneriliyor (Mobile App → Uygulamalarımız, Destek Ol, İletişim, Duyurular). *Bu bir varsayımdır, kullanıcı onayı gerekir.*
+**Ana sayfa "Neler Yapıyoruz?" kartları güncellemesi:** Mevcut 4 kart (Mobile App, Aylık Bülten, Destek Ol, İletişim) → Aylık Bülten kartı kaldırıldı (bülten artık normal bir haber olarak yayınlanacak), yerine yeni bir kart eklenmez. Kalan 3 kart: Uygulamalarımız (eski Mobile App), Destek Ol, İletişim. Duyurular zaten kendi menü öğesi olduğu için burada ayrıca tekrarlanmaz.
 
 **Not — "Etik İlkeler" ile "Amacımız ve İlkelerimiz" farkı:** Etik İlkeler mevcut `/yasal/etik-ilkeler` sayfası olarak ayrı kalır (davranış kuralları); Amacımız ve İlkelerimiz yeni bir misyon/vizyon metni olarak Hakkımızda içinde yer alır. İkisi farklı içeriklerdir, karıştırılmayacak.
 
@@ -126,7 +126,6 @@ Tüm çok-dilli alanlar `_tr` / `_en` sütun çiftleri olarak tutulur (ayrı çe
 - `news-events-covers` (public bucket): haber/etkinlik kapak görselleri
 - `documents` (public bucket): tüzük, beyannameler, faaliyet raporları PDF'leri
 
-## 10. Açık Varsayımlar (kullanıcı onayı gerekir)
+## 10. Kullanıcı Onayı
 
-1. Ana sayfa "Neler Yapıyoruz?" kartlarında Aylık Bülten'in yerine "Duyurular" kartı eklenmesi (bkz. §5)
-2. `documents` tablosunun Beyannameler ve Faaliyet Raporları için ortak/tek tablo olarak tasarlanması (aynı admin arayüzü, `type` alanıyla filtrelenir)
+Bu spesifikasyondaki tüm kararlar (tasarım sistemi, bilgi mimarisi, veri modeli, yetkilendirme, uyumluluk yaklaşımı) kullanıcı ile birlikte gözden geçirilmiş ve onaylanmıştır. Açık soru kalmamıştır.
