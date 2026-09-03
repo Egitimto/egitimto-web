@@ -5,6 +5,7 @@ import { localize } from '@/lib/i18n/localize'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { PdfDownloadButton } from '@/components/ui/PdfDownloadButton'
+import { ValuesBeamDiagram } from '@/components/site/ValuesBeamDiagram'
 import { isSafeHttpUrl } from '@/lib/url-safety'
 import type { Document } from '@/lib/supabase/types'
 
@@ -92,20 +93,9 @@ export default async function HakkimizdaPage() {
         <h2 className="font-display text-xl font-bold text-dark">
           {localize('Değerlerimiz', 'Our Values', locale)}
         </h2>
-        <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {localize(about?.degerler_tr ?? '', about?.degerler_en ?? '', locale)
-            .split('\n')
-            .filter(Boolean)
-            .map((line) => {
-              const [title, ...rest] = line.split(':')
-              return (
-                <li key={title} className="rounded-xl border border-neutral-200 p-4">
-                  <p className="font-semibold text-dark">{title}</p>
-                  <p className="mt-1 text-sm text-body-text">{rest.join(':').trim()}</p>
-                </li>
-              )
-            })}
-        </ul>
+        <div className="mt-6">
+          <ValuesBeamDiagram valuesTr={about?.degerler_tr ?? ''} valuesEn={about?.degerler_en ?? ''} locale={locale} />
+        </div>
       </section>
 
       <section className="mb-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -114,11 +104,17 @@ export default async function HakkimizdaPage() {
             {localize('Dernek Tüzüğü', 'Association Charter', locale)}
           </h2>
           <p className="mt-2 text-sm text-body-text">
-            {localize(
-              'Tüzüğün tam metni PDF olarak yakında burada yer alacak.',
-              'The full text of the charter will be available here as a PDF soon.',
-              locale
-            )}
+            {about?.tuzuk_pdf_url && isSafeHttpUrl(about.tuzuk_pdf_url)
+              ? localize(
+                  'Tüzüğün tam metnini aşağıdan PDF olarak indirebilirsiniz.',
+                  'You can download the full text of the charter below as a PDF.',
+                  locale
+                )
+              : localize(
+                  'Tüzüğün tam metni PDF olarak yakında burada yer alacak.',
+                  'The full text of the charter will be available here as a PDF soon.',
+                  locale
+                )}
           </p>
           <div className="mt-3">
             <PdfDownloadButton

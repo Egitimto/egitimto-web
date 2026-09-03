@@ -121,7 +121,9 @@ export type Database = {
           cover_image: string | null
           created_at: string
           event_date: string | null
+          featured_at: string | null
           id: string
+          is_featured: boolean
           is_published: boolean
           location: string | null
           published_at: string | null
@@ -138,7 +140,9 @@ export type Database = {
           cover_image?: string | null
           created_at?: string
           event_date?: string | null
+          featured_at?: string | null
           id?: string
+          is_featured?: boolean
           is_published?: boolean
           location?: string | null
           published_at?: string | null
@@ -155,7 +159,9 @@ export type Database = {
           cover_image?: string | null
           created_at?: string
           event_date?: string | null
+          featured_at?: string | null
           id?: string
+          is_featured?: boolean
           is_published?: boolean
           location?: string | null
           published_at?: string | null
@@ -174,7 +180,9 @@ export type Database = {
           content_tr: string
           cover_image: string | null
           created_at: string
+          featured_at: string | null
           id: string
+          is_featured: boolean
           is_published: boolean
           published_at: string | null
           show_apply_button: boolean
@@ -189,7 +197,9 @@ export type Database = {
           content_tr?: string
           cover_image?: string | null
           created_at?: string
+          featured_at?: string | null
           id?: string
+          is_featured?: boolean
           is_published?: boolean
           published_at?: string | null
           show_apply_button?: boolean
@@ -204,7 +214,9 @@ export type Database = {
           content_tr?: string
           cover_image?: string | null
           created_at?: string
+          featured_at?: string | null
           id?: string
+          is_featured?: boolean
           is_published?: boolean
           published_at?: string | null
           show_apply_button?: boolean

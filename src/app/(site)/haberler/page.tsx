@@ -1,11 +1,10 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { getLocale } from '@/lib/i18n/locale'
 import { localize } from '@/lib/i18n/localize'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Card } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { BentoGrid, BentoCard, bentoSpanClass } from '@/components/ui/bento-grid'
 import { isSafeHttpUrl } from '@/lib/url-safety'
 
 export default async function HaberlerPage() {
@@ -22,27 +21,26 @@ export default async function HaberlerPage() {
     <div className="mx-auto max-w-5xl px-6 py-16">
       <SectionHeading title={localize('Haberler', 'News', locale)} />
 
-      {(!news || news.length === 0) ? (
+      {!news || news.length === 0 ? (
         <EmptyState message={localize('Henüz yayınlanmış bir haber yok.', 'No news has been published yet.', locale)} />
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {news.map((item) => (
-            <Link key={item.id} href={`/haberler/${item.slug}`}>
-              <Card>
-                {item.cover_image && isSafeHttpUrl(item.cover_image) && (
-                  <Image
-                    src={item.cover_image}
-                    alt=""
-                    width={400}
-                    height={220}
-                    className="mb-4 h-40 w-full rounded-xl object-cover"
-                  />
-                )}
-                <h3 className="font-display font-bold text-dark">{localize(item.title_tr, item.title_en, locale)}</h3>
-              </Card>
-            </Link>
+        <BentoGrid>
+          {news.map((item, index) => (
+            <BentoCard
+              key={item.id}
+              className={bentoSpanClass(index)}
+              name={localize(item.title_tr, item.title_en, locale)}
+              description={localize(item.content_tr, item.content_en, locale)}
+              href={`/haberler/${item.slug}`}
+              cta={localize('Detayları Gör', 'Read More', locale)}
+              background={
+                item.cover_image && isSafeHttpUrl(item.cover_image) ? (
+                  <Image src={item.cover_image} alt="" fill className="object-cover" />
+                ) : undefined
+              }
+            />
           ))}
-        </div>
+        </BentoGrid>
       )}
     </div>
   )

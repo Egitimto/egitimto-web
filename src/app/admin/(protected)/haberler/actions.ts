@@ -66,3 +66,15 @@ export async function deleteNews(formData: FormData) {
   revalidatePath('/admin/haberler')
   revalidatePath('/haberler')
 }
+
+export async function toggleFeaturedNews(formData: FormData) {
+  const id = String(formData.get('id') ?? '')
+  const isFeatured = formData.get('is_featured') === 'true'
+  const supabase = await createClient()
+  await supabase
+    .from('news')
+    .update({ is_featured: !isFeatured, featured_at: !isFeatured ? new Date().toISOString() : null })
+    .eq('id', id)
+  revalidatePath('/admin/haberler')
+  revalidatePath('/')
+}

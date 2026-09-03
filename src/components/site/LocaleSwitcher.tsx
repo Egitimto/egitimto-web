@@ -17,8 +17,8 @@ export function LocaleSwitcher({ locale }: { locale: Locale }) {
             type="submit"
             className={
               locale === target
-                ? 'font-semibold text-primary'
-                : 'text-neutral-400 hover:text-body-text'
+                ? 'font-semibold text-white'
+                : 'text-white/60 hover:text-white'
             }
             aria-current={locale === target}
           >

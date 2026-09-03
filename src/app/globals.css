@@ -20,6 +20,19 @@
   --color-body-text: var(--body-text);
   --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
+  --animate-shine: shine var(--duration) infinite linear;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
 body {

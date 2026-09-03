@@ -70,3 +70,15 @@ export async function deleteEvent(formData: FormData) {
   revalidatePath('/admin/etkinlikler')
   revalidatePath('/etkinlikler')
 }
+
+export async function toggleFeaturedEvent(formData: FormData) {
+  const id = String(formData.get('id') ?? '')
+  const isFeatured = formData.get('is_featured') === 'true'
+  const supabase = await createClient()
+  await supabase
+    .from('events')
+    .update({ is_featured: !isFeatured, featured_at: !isFeatured ? new Date().toISOString() : null })
+    .eq('id', id)
+  revalidatePath('/admin/etkinlikler')
+  revalidatePath('/')
+}

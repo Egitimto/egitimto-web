@@ -3,7 +3,8 @@ import { requireSection } from '@/lib/auth/require-section'
 import { createClient } from '@/lib/supabase/server'
 import { AdminTable } from '@/components/admin/AdminTable'
 import { DeleteButton } from '@/components/admin/DeleteButton'
-import { deleteNews } from './actions'
+import { FeaturedToggleButton } from '@/components/admin/FeaturedToggleButton'
+import { deleteNews, toggleFeaturedNews } from './actions'
 
 export default async function AdminHaberlerPage() {
   await requireSection('haberler')
@@ -33,11 +34,17 @@ export default async function AdminHaberlerPage() {
           {(news ?? []).map((item) => (
             <tr key={item.id} className="border-b border-neutral-100">
               <td className="p-3">{item.title_tr}</td>
-              <td className="p-3">{item.is_published ? 'Yayında' : 'Taslak'}</td>
+              <td className="p-3">
+                {item.is_published ? 'Yayında' : 'Taslak'}
+                {item.is_featured && <span className="ml-2 text-xs font-semibold text-primary">★ Öne Çıkan</span>}
+              </td>
               <td className="space-x-3 p-3 text-right">
                 <Link href={`/admin/haberler/${item.id}`} className="text-sm text-primary hover:underline">
                   Düzenle
                 </Link>
+                <FeaturedToggleButton action={toggleFeaturedNews} isFeatured={item.is_featured}>
+                  <input type="hidden" name="id" value={item.id} />
+                </FeaturedToggleButton>
                 <DeleteButton action={deleteNews}>
                   <input type="hidden" name="id" value={item.id} />
                 </DeleteButton>

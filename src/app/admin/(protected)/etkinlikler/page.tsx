@@ -3,7 +3,8 @@ import { requireSection } from '@/lib/auth/require-section'
 import { createClient } from '@/lib/supabase/server'
 import { AdminTable } from '@/components/admin/AdminTable'
 import { DeleteButton } from '@/components/admin/DeleteButton'
-import { deleteEvent } from './actions'
+import { FeaturedToggleButton } from '@/components/admin/FeaturedToggleButton'
+import { deleteEvent, toggleFeaturedEvent } from './actions'
 
 export default async function AdminEtkinliklerPage() {
   await requireSection('etkinlikler')
@@ -35,11 +36,17 @@ export default async function AdminEtkinliklerPage() {
             <tr key={item.id} className="border-b border-neutral-100">
               <td className="p-3">{item.title_tr}</td>
               <td className="p-3">{item.event_date ?? '—'}</td>
-              <td className="p-3">{item.is_published ? 'Yayında' : 'Taslak'}</td>
+              <td className="p-3">
+                {item.is_published ? 'Yayında' : 'Taslak'}
+                {item.is_featured && <span className="ml-2 text-xs font-semibold text-primary">★ Öne Çıkan</span>}
+              </td>
               <td className="space-x-3 p-3 text-right">
                 <Link href={`/admin/etkinlikler/${item.id}`} className="text-sm text-primary hover:underline">
                   Düzenle
                 </Link>
+                <FeaturedToggleButton action={toggleFeaturedEvent} isFeatured={item.is_featured}>
+                  <input type="hidden" name="id" value={item.id} />
+                </FeaturedToggleButton>
                 <DeleteButton action={deleteEvent}>
                   <input type="hidden" name="id" value={item.id} />
                 </DeleteButton>

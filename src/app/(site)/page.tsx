@@ -6,6 +6,8 @@ import { localize } from '@/lib/i18n/localize'
 import { Card } from '@/components/ui/Card'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { FeaturedShowcase, type FeaturedItem } from '@/components/site/FeaturedShowcase'
+import { GridPattern } from '@/components/ui/grid-pattern'
 import { isSafeHttpUrl } from '@/lib/url-safety'
 
 const STATS = [
@@ -49,41 +51,86 @@ export default async function Home() {
     .order('published_at', { ascending: false })
     .limit(3)
 
+  const [{ data: featuredNews }, { data: featuredEvents }] = await Promise.all([
+    supabase
+      .from('news')
+      .select('*')
+      .eq('is_published', true)
+      .eq('is_featured', true)
+      .order('featured_at', { ascending: false }),
+    supabase
+      .from('events')
+      .select('*')
+      .eq('is_published', true)
+      .eq('is_featured', true)
+      .order('featured_at', { ascending: false }),
+  ])
+
+  const featuredItems: FeaturedItem[] = [
+    ...(featuredNews ?? []).map((item) => ({
+      id: item.id,
+      type: 'haber' as const,
+      title_tr: item.title_tr,
+      title_en: item.title_en,
+      cover_image: item.cover_image,
+      slug: item.slug,
+      featured_at: item.featured_at,
+    })),
+    ...(featuredEvents ?? []).map((item) => ({
+      id: item.id,
+      type: 'etkinlik' as const,
+      title_tr: item.title_tr,
+      title_en: item.title_en,
+      cover_image: item.cover_image,
+      slug: item.slug,
+      featured_at: item.featured_at,
+    })),
+  ].sort((a, b) => (b.featured_at ?? '').localeCompare(a.featured_at ?? ''))
+
   return (
     <>
-      <section className="gradient-cream px-6 py-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <span className="mb-4 inline-block rounded-full bg-white px-4 py-1 text-sm font-medium text-primary">
-            🎓 {localize('Eğitim Teknoloji ve Oyun Derneği', 'Education, Technology and Gaming Association', locale)}
-          </span>
-          <h1 className="font-display text-4xl font-bold text-dark sm:text-5xl">
-            {localize('Eğitimde Fırsat Eşitliği İçin Birlikte', 'Together for Equal Opportunities in Education', locale)}
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-body-text">
-            {localize(
-              'Eğitim, teknoloji ve oyun alanlarında toplumsal fayda sağlamak için çalışan bir sivil toplum kuruluşu.',
-              'A civil society organization working to provide social benefit in the fields of education, technology and gaming.',
-              locale
-            )}
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href="/hakkimizda" className="gradient-primary rounded-full px-6 py-3 font-semibold text-white">
-              {localize('Projelerimizi İncele', 'Explore Our Projects', locale)}
-            </Link>
-            <Link href="/destek-ol" className="rounded-full border border-primary px-6 py-3 font-semibold text-primary">
-              {localize('Destek Ol', 'Support Us', locale)}
-            </Link>
+      {featuredItems.length > 0 ? (
+        <section className="relative overflow-hidden px-6 py-20 sm:py-24">
+          <GridPattern className="[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]" />
+          <div className="relative mx-auto max-w-6xl">
+            <FeaturedShowcase items={featuredItems} locale={locale} />
           </div>
-          <div className="mt-12 grid grid-cols-3 gap-4">
-            {STATS.map((stat) => (
-              <div key={stat.tr}>
-                <p className="font-display text-3xl font-bold text-primary">{stat.value}</p>
-                <p className="text-sm text-body-text">{localize(stat.tr, stat.en, locale)}</p>
-              </div>
-            ))}
+        </section>
+      ) : (
+        <section className="gradient-cream px-6 py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <span className="mb-4 inline-block rounded-full bg-white px-4 py-1 text-sm font-medium text-primary">
+              🎓 {localize('Eğitim Teknoloji ve Oyun Derneği', 'Education, Technology and Gaming Association', locale)}
+            </span>
+            <h1 className="font-display text-4xl font-bold text-dark sm:text-5xl">
+              {localize('Eğitimde Fırsat Eşitliği İçin Birlikte', 'Together for Equal Opportunities in Education', locale)}
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-body-text">
+              {localize(
+                'Eğitim, teknoloji ve oyun alanlarında toplumsal fayda sağlamak için çalışan bir sivil toplum kuruluşu.',
+                'A civil society organization working to provide social benefit in the fields of education, technology and gaming.',
+                locale
+              )}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link href="/hakkimizda" className="gradient-primary rounded-full px-6 py-3 font-semibold text-white">
+                {localize('Projelerimizi İncele', 'Explore Our Projects', locale)}
+              </Link>
+              <Link href="/destek-ol" className="rounded-full border border-primary px-6 py-3 font-semibold text-primary">
+                {localize('Destek Ol', 'Support Us', locale)}
+              </Link>
+            </div>
+            <div className="mt-12 grid grid-cols-3 gap-4">
+              {STATS.map((stat) => (
+                <div key={stat.tr}>
+                  <p className="font-display text-3xl font-bold text-primary">{stat.value}</p>
+                  <p className="text-sm text-body-text">{localize(stat.tr, stat.en, locale)}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading
