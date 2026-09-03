@@ -1,3 +1,5 @@
+import { isSafeHttpUrl } from '@/lib/url-safety'
+
 export function PdfDownloadButton({
   url,
   label,
@@ -7,7 +9,7 @@ export function PdfDownloadButton({
   label: string
   unavailableLabel: string
 }) {
-  if (!url) {
+  if (!url || !isSafeHttpUrl(url)) {
     return (
       <span className="inline-block cursor-not-allowed rounded-full border border-neutral-300 px-5 py-2 text-sm text-neutral-400">
         {unavailableLabel}
