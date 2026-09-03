@@ -6,6 +6,8 @@ export type AdminSection =
   | 'ekibimiz'
   | 'isbirlikleri'
   | 'hakkimizda'
+  | 'belgeler'
+  | 'mesajlar'
 
 const MODERATOR_SECTIONS: AdminSection[] = ['haberler', 'etkinlikler']
 

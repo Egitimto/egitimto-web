@@ -10,6 +10,8 @@ const NAV_ITEMS: { href: string; label: string; section: AdminSection }[] = [
   { href: '/admin/ekibimiz', label: 'Ekibimiz', section: 'ekibimiz' },
   { href: '/admin/isbirlikleri', label: 'İşbirlikleri', section: 'isbirlikleri' },
   { href: '/admin/hakkimizda', label: 'Hakkımızda', section: 'hakkimizda' },
+  { href: '/admin/belgeler', label: 'Belgeler', section: 'belgeler' },
+  { href: '/admin/mesajlar', label: 'Gelen Mesajlar', section: 'mesajlar' },
 ]
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
