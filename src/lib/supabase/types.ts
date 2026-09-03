@@ -27,3 +27,5 @@ export type NewsItem = Tables<'news'>
 export type EventItem = Tables<'events'>
 
 export type TeamMember = Omit<Tables<'team_members'>, 'social_links'> & { social_links: SocialLinks }
+
+export type ContactMessage = Tables<'contact_messages'>

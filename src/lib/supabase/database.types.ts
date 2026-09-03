@@ -18,23 +18,68 @@ export type Database = {
         Row: {
           amac_ilkeler_en: string
           amac_ilkeler_tr: string
+          degerler_en: string
+          degerler_tr: string
           id: number
+          kurulus_en: string
+          kurulus_tr: string
           tuzuk_pdf_url: string | null
           updated_at: string
+          vizyon_en: string
+          vizyon_tr: string
         }
         Insert: {
           amac_ilkeler_en?: string
           amac_ilkeler_tr?: string
+          degerler_en?: string
+          degerler_tr?: string
           id?: number
+          kurulus_en?: string
+          kurulus_tr?: string
           tuzuk_pdf_url?: string | null
           updated_at?: string
+          vizyon_en?: string
+          vizyon_tr?: string
         }
         Update: {
           amac_ilkeler_en?: string
           amac_ilkeler_tr?: string
+          degerler_en?: string
+          degerler_tr?: string
           id?: number
+          kurulus_en?: string
+          kurulus_tr?: string
           tuzuk_pdf_url?: string | null
           updated_at?: string
+          vizyon_en?: string
+          vizyon_tr?: string
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string
+          subject?: string
         }
         Relationships: []
       }
