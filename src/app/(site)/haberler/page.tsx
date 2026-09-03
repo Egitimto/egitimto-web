@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { getLocale } from '@/lib/i18n/locale'
@@ -5,6 +6,7 @@ import { localize } from '@/lib/i18n/localize'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Card } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { isSafeHttpUrl } from '@/lib/url-safety'
 
 export default async function HaberlerPage() {
   const locale = await getLocale()
@@ -27,6 +29,15 @@ export default async function HaberlerPage() {
           {news.map((item) => (
             <Link key={item.id} href={`/haberler/${item.slug}`}>
               <Card>
+                {item.cover_image && isSafeHttpUrl(item.cover_image) && (
+                  <Image
+                    src={item.cover_image}
+                    alt=""
+                    width={400}
+                    height={220}
+                    className="mb-4 h-40 w-full rounded-xl object-cover"
+                  />
+                )}
                 <h3 className="font-display font-bold text-dark">{localize(item.title_tr, item.title_en, locale)}</h3>
               </Card>
             </Link>

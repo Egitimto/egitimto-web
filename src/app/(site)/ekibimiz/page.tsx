@@ -1,9 +1,11 @@
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
 import { getLocale } from '@/lib/i18n/locale'
 import { localize } from '@/lib/i18n/localize'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Card } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { isSafeHttpUrl } from '@/lib/url-safety'
 
 function initials(fullName: string) {
   return fullName
@@ -38,6 +40,7 @@ export default async function EkibimizPage() {
           full_name: string
           role_tr: string
           role_en: string
+          photo_url: string | null
           sort_order: number
         }[]).sort((a, b) => a.sort_order - b.sort_order)
 
@@ -51,9 +54,19 @@ export default async function EkibimizPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
               {members.map((member) => (
                 <Card key={member.id} className="text-center">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 font-display text-lg font-bold text-primary">
-                    {initials(member.full_name)}
-                  </div>
+                  {member.photo_url && isSafeHttpUrl(member.photo_url) ? (
+                    <Image
+                      src={member.photo_url}
+                      alt={member.full_name}
+                      width={64}
+                      height={64}
+                      className="mx-auto h-16 w-16 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 font-display text-lg font-bold text-primary">
+                      {initials(member.full_name)}
+                    </div>
+                  )}
                   <p className="mt-3 font-semibold text-dark">{member.full_name}</p>
                   <p className="text-sm text-body-text">{localize(member.role_tr, member.role_en, locale)}</p>
                 </Card>

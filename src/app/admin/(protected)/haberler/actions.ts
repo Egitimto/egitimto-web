@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { uploadToStorage } from '@/lib/storage-upload'
 import { slugify } from '@/lib/slugify'
+import { normalizeHttpUrl } from '@/lib/url-safety'
 
 export async function upsertNews(formData: FormData) {
   const id = String(formData.get('id') ?? '')
@@ -15,7 +16,8 @@ export async function upsertNews(formData: FormData) {
   let slug = String(formData.get('slug') ?? '').trim()
   const isPublished = formData.get('is_published') === 'on'
   const showApplyButton = formData.get('show_apply_button') === 'on'
-  const applyButtonUrl = String(formData.get('apply_button_url') ?? '').trim() || null
+  const rawApplyButtonUrl = String(formData.get('apply_button_url') ?? '').trim()
+  const applyButtonUrl = rawApplyButtonUrl ? normalizeHttpUrl(rawApplyButtonUrl) : null
 
   if (!titleTr || !titleEn) {
     redirect(`/admin/haberler/${id || 'new'}?error=${encodeURIComponent('Başlık alanları zorunludur.')}`)

@@ -6,3 +6,7 @@ export function isSafeHttpUrl(value: string): boolean {
     return false
   }
 }
+
+export function normalizeHttpUrl(value: string): string {
+  return /^https?:\/\//i.test(value) ? value : `https://${value}`
+}

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getLocale } from '@/lib/i18n/locale'
@@ -20,6 +21,15 @@ export default async function HaberDetayPage({ params }: { params: Promise<{ slu
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-16">
+      {item.cover_image && isSafeHttpUrl(item.cover_image) && (
+        <Image
+          src={item.cover_image}
+          alt=""
+          width={800}
+          height={450}
+          className="mb-8 w-full rounded-2xl object-cover"
+        />
+      )}
       <h1 className="font-display text-3xl font-bold text-dark">{localize(item.title_tr, item.title_en, locale)}</h1>
       <div className="mt-6 whitespace-pre-line text-body-text">
         {localize(item.content_tr, item.content_en, locale)}

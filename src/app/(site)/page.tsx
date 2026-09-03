@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
 import { getLocale } from '@/lib/i18n/locale'
 import { localize } from '@/lib/i18n/localize'
 import { Card } from '@/components/ui/Card'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { isSafeHttpUrl } from '@/lib/url-safety'
 
 const STATS = [
   { value: '500+', tr: 'Öğrenci', en: 'Students' },
@@ -39,6 +41,13 @@ const FOCUS_AREAS = [
 
 export default async function Home() {
   const locale = await getLocale()
+  const supabase = await createClient()
+  const { data: latestNews } = await supabase
+    .from('news')
+    .select('*')
+    .eq('is_published', true)
+    .order('published_at', { ascending: false })
+    .limit(3)
 
   return (
     <>
@@ -103,13 +112,36 @@ export default async function Home() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <SectionHeading title={localize('Son Haberler', 'Latest News', locale)} />
-        <EmptyState
-          message={localize(
-            'Henüz yayınlanmış bir haber yok, yakında burada olacak.',
-            'No news has been published yet — check back soon.',
-            locale
-          )}
-        />
+        {!latestNews || latestNews.length === 0 ? (
+          <EmptyState
+            message={localize(
+              'Henüz yayınlanmış bir haber yok, yakında burada olacak.',
+              'No news has been published yet — check back soon.',
+              locale
+            )}
+          />
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {latestNews.map((item) => (
+              <Link key={item.id} href={`/haberler/${item.slug}`}>
+                <Card>
+                  {item.cover_image && isSafeHttpUrl(item.cover_image) && (
+                    <Image
+                      src={item.cover_image}
+                      alt=""
+                      width={400}
+                      height={220}
+                      className="mb-4 h-40 w-full rounded-xl object-cover"
+                    />
+                  )}
+                  <h3 className="font-display font-bold text-dark">
+                    {localize(item.title_tr, item.title_en, locale)}
+                  </h3>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="gradient-cream px-6 py-16">

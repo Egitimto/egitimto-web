@@ -105,6 +105,7 @@ export default async function AdminEtkinlikFormPage({
             id="apply_button_url"
             name="apply_button_url"
             defaultValue={item?.apply_button_url ?? ''}
+            placeholder="https://..."
             className="w-full rounded-lg border border-neutral-300 px-3 py-2"
           />
         </FormField>
