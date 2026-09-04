@@ -23,7 +23,7 @@ export function NavDropdown({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1 text-sm font-medium text-white/90 hover:text-white"
+        className="flex items-center gap-1 text-base font-medium text-white/90 hover:text-white"
         aria-expanded={open}
       >
         {label}

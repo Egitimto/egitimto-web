@@ -47,6 +47,12 @@ export default async function DestekOlPage() {
               locale
             )}
           </p>
+          <button
+            type="button"
+            className="gradient-primary mt-4 rounded-full px-6 py-2 text-sm font-semibold text-white"
+          >
+            {localize('Gönüllümüz Ol', 'Become a Volunteer', locale)}
+          </button>
         </Card>
 
         <Card>
@@ -81,6 +87,12 @@ export default async function DestekOlPage() {
               locale
             )}
           </p>
+          <button
+            type="button"
+            className="gradient-primary mt-4 rounded-full px-6 py-2 text-sm font-semibold text-white"
+          >
+            {localize('İşbirliği Başvurusu', 'Collaboration Application', locale)}
+          </button>
         </Card>
       </div>
     </div>

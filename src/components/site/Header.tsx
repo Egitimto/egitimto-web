@@ -19,27 +19,27 @@ export function Header({ locale }: { locale: Locale }) {
 
   return (
     <header className="gradient-primary">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+      <div className="flex w-full items-center justify-between px-6 py-3 sm:px-10">
         <Link href="/" className="flex items-center gap-3">
           <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
             <Image src="/images/kurumlogo.png" alt="" width={62} height={62} className="object-contain" />
           </span>
-          <span className="font-display text-lg font-bold text-white">Eğitim Teknoloji ve Oyun Derneği</span>
+          <span className="font-display text-2xl font-bold text-white">Eğitim Teknoloji ve Oyun Derneği</span>
         </Link>
         <div className="flex items-center gap-8">
           <nav className="hidden items-center gap-6 md:flex" aria-label="Ana menü">
             <NavDropdown label={localize('EğitimTO', 'EğitimTO', locale)} items={egitimtoItems} />
             <NavDropdown label={localize('Duyurular', 'Announcements', locale)} items={duyurularItems} />
-            <Link href="/uygulamalarimiz" className="text-sm font-medium text-white/90 hover:text-white">
+            <Link href="/uygulamalarimiz" className="text-base font-medium text-white/90 hover:text-white">
               {localize('Uygulamalarımız', 'Our Apps', locale)}
             </Link>
-            <Link href="/alanlarimiz" className="text-sm font-medium text-white/90 hover:text-white">
+            <Link href="/alanlarimiz" className="text-base font-medium text-white/90 hover:text-white">
               {localize('Alanlarımız', 'Our Focus Areas', locale)}
             </Link>
-            <Link href="/destek-ol" className="text-sm font-medium text-white/90 hover:text-white">
+            <Link href="/destek-ol" className="text-base font-medium text-white/90 hover:text-white">
               {localize('Destek Ol', 'Support Us', locale)}
             </Link>
-            <Link href="/iletisim" className="text-sm font-medium text-white/90 hover:text-white">
+            <Link href="/iletisim" className="text-base font-medium text-white/90 hover:text-white">
               {localize('İletişim', 'Contact', locale)}
             </Link>
           </nav>

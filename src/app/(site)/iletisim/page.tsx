@@ -3,8 +3,13 @@ import { ContactForm } from './ContactForm'
 import { CONTACT_INFO } from '@/content/contact-info'
 import { localize } from '@/lib/i18n/localize'
 
-export default async function IletisimPage() {
+export default async function IletisimPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ subject?: string }>
+}) {
   const locale = await getLocale()
+  const { subject } = await searchParams
 
   return (
     <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 px-6 py-16 sm:grid-cols-2">
@@ -32,7 +37,7 @@ export default async function IletisimPage() {
           </div>
         </dl>
       </div>
-      <ContactForm locale={locale} />
+      <ContactForm locale={locale} defaultSubject={subject} />
     </div>
   )
 }

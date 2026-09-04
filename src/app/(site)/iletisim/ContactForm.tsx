@@ -11,10 +11,11 @@ const SUBJECTS: { tr: string; en: string }[] = [
   { tr: 'Eğitim Programları', en: 'Educational Programs' },
   { tr: 'Gönüllülük', en: 'Volunteer Cooperation' },
   { tr: 'İşbirliği', en: 'Partnership' },
+  { tr: 'Kişisel Verilerimin Silinmesi', en: 'Deletion of My Personal Data' },
   { tr: 'Diğer', en: 'Other' },
 ]
 
-export function ContactForm({ locale }: { locale: Locale }) {
+export function ContactForm({ locale, defaultSubject }: { locale: Locale; defaultSubject?: string }) {
   const [state, formAction, pending] = useActionState(submitContactForm, { success: false })
 
   return (
@@ -35,7 +36,13 @@ export function ContactForm({ locale }: { locale: Locale }) {
         <label htmlFor="subject" className="block text-sm font-medium text-body-text">
           {localize('Konu', 'Subject', locale)}
         </label>
-        <select id="subject" name="subject" required className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2">
+        <select
+          id="subject"
+          name="subject"
+          required
+          defaultValue={defaultSubject}
+          className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2"
+        >
           {SUBJECTS.map((subject) => (
             <option key={subject.tr} value={locale === 'en' ? subject.en : subject.tr}>
               {localize(subject.tr, subject.en, locale)}

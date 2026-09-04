@@ -1,7 +1,7 @@
 export const CONTACT_INFO = {
   address: 'Fahrettin Altay, 65/20. Sk. No:14A, 35140 Karabağlar/İzmir',
   email: 'info@egitimto.org',
-  collaborationEmail: 'isbirligi@egitimto.org',
+  collaborationEmail: 'info@egitimto.org',
   ethicsEmail: 'etik@egitimto.org',
   pressEmail: 'basin@egitimto.org',
   registryNumber: '35-088-084',
@@ -10,10 +10,6 @@ export const CONTACT_INFO = {
     en: 'Mon-Fri 09:00-18:00, Sat 09:00-13:00, Closed on Sundays',
   },
   socials: {
-    twitter: 'https://twitter.com/egitimto',
-    facebook: 'https://facebook.com/egitimto',
-    instagram: 'https://instagram.com/egitimto',
-    youtube: 'https://youtube.com/egitimto',
-    linkedin: 'https://linkedin.com/company/egitimto',
+    instagram: 'https://www.instagram.com/egitimtoder',
   },
 }

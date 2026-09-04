@@ -8,7 +8,9 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { FeaturedShowcase, type FeaturedItem } from '@/components/site/FeaturedShowcase'
 import { GridPattern } from '@/components/ui/grid-pattern'
+import { Reveal } from '@/components/ui/Reveal'
 import { isSafeHttpUrl } from '@/lib/url-safety'
+import { FOCUS_AREAS } from '@/content/alanlarimiz'
 
 const STATS = [
   { value: '500+', tr: 'Öğrenci', en: 'Students' },
@@ -32,13 +34,6 @@ const WHAT_WE_DO = [
     tr: { title: 'İletişim', description: 'Bize ulaşın, sorularınızı sorun.' },
     en: { title: 'Contact', description: 'Contact us, ask your questions.' },
   },
-]
-
-const FOCUS_AREAS = [
-  { tr: 'Eğitim & Teknoloji', en: 'Education & Technology' },
-  { tr: 'Oyun & Öğrenme', en: 'Gaming & Learning' },
-  { tr: 'Dijital Okuryazarlık', en: 'Digital Literacy' },
-  { tr: 'Gençlik & Gönüllülük', en: 'Youth & Volunteering' },
 ]
 
 export default async function Home() {
@@ -133,32 +128,41 @@ export default async function Home() {
       )}
 
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <SectionHeading
-          title={localize('Neler Yapıyoruz?', 'What Do We Do?', locale)}
-          subtitle={localize(
-            'Eğitim, teknoloji ve oyun alanlarındaki faaliyetlerimizle toplumsal değişime katkı sağlıyoruz',
-            'We contribute to social change through our activities in education, technology and gaming',
-            locale
-          )}
-        />
+        <Reveal>
+          <SectionHeading
+            title={localize('Neler Yapıyoruz?', 'What Do We Do?', locale)}
+            subtitle={localize(
+              'Eğitim, teknoloji ve oyun alanlarında gerçekleştirdiğimiz faaliyetlerimizle toplumsal değişime katkı sağlıyoruz.',
+              'We contribute to social change through our activities in education, technology and gaming',
+              locale
+            )}
+          />
+        </Reveal>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {WHAT_WE_DO.map((item) => {
+          {WHAT_WE_DO.map((item, i) => {
             const content = locale === 'en' ? item.en : item.tr
             return (
-              <Card key={item.href}>
-                <h3 className="font-display text-lg font-bold text-dark">{content.title}</h3>
-                <p className="mt-2 text-sm text-body-text">{content.description}</p>
-                <Link href={item.href} className="mt-4 inline-block text-sm font-semibold text-primary">
-                  {localize('Devamını Gör →', 'Learn More →', locale)}
-                </Link>
-              </Card>
+              <Reveal key={item.href} delay={i * 0.1} className="h-full">
+                <Card className="flex h-full flex-col">
+                  <h3 className="font-display text-lg font-bold text-dark">{content.title}</h3>
+                  <p className="mt-2 flex-1 text-sm text-body-text">{content.description}</p>
+                  <Link
+                    href={item.href}
+                    className="gradient-primary mt-4 inline-block self-start rounded-full px-5 py-2 text-sm font-semibold text-white"
+                  >
+                    {localize('Detayları Gör', 'View Details', locale)}
+                  </Link>
+                </Card>
+              </Reveal>
             )
           })}
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <SectionHeading title={localize('Son Haberler', 'Latest News', locale)} />
+        <Reveal>
+          <SectionHeading title={localize('Son Haberler', 'Latest News', locale)} />
+        </Reveal>
         {!latestNews || latestNews.length === 0 ? (
           <EmptyState
             message={localize(
@@ -169,23 +173,25 @@ export default async function Home() {
           />
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {latestNews.map((item) => (
-              <Link key={item.id} href={`/haberler/${item.slug}`}>
-                <Card>
-                  {item.cover_image && isSafeHttpUrl(item.cover_image) && (
-                    <Image
-                      src={item.cover_image}
-                      alt=""
-                      width={400}
-                      height={220}
-                      className="mb-4 h-40 w-full rounded-xl object-cover"
-                    />
-                  )}
-                  <h3 className="font-display font-bold text-dark">
-                    {localize(item.title_tr, item.title_en, locale)}
-                  </h3>
-                </Card>
-              </Link>
+            {latestNews.map((item, i) => (
+              <Reveal key={item.id} delay={i * 0.1}>
+                <Link href={`/haberler/${item.slug}`}>
+                  <Card>
+                    {item.cover_image && isSafeHttpUrl(item.cover_image) && (
+                      <Image
+                        src={item.cover_image}
+                        alt=""
+                        width={400}
+                        height={220}
+                        className="mb-4 h-40 w-full rounded-xl object-cover"
+                      />
+                    )}
+                    <h3 className="font-display font-bold text-dark">
+                      {localize(item.title_tr, item.title_en, locale)}
+                    </h3>
+                  </Card>
+                </Link>
+              </Reveal>
             ))}
           </div>
         )}
@@ -193,8 +199,10 @@ export default async function Home() {
 
       <section className="gradient-cream px-6 py-16">
         <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 sm:grid-cols-2">
-          <Image src="/images/hero.jpg" alt="" width={600} height={400} className="rounded-2xl" />
-          <div>
+          <Reveal y={0} className="scale-95">
+            <Image src="/images/bizkimizgorsel.jpg" alt="" width={600} height={400} className="rounded-2xl" />
+          </Reveal>
+          <Reveal delay={0.1}>
             <h2 className="font-display text-2xl font-bold text-dark">
               {localize('Biz Kimiz?', 'Who Are We?', locale)}
             </h2>
@@ -208,33 +216,36 @@ export default async function Home() {
             <Link href="/hakkimizda" className="mt-4 inline-block font-semibold text-primary">
               {localize('Daha Fazla Bilgi →', 'More Information →', locale)}
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <SectionHeading title={localize('Faaliyet Alanlarımız', 'Our Areas of Activity', locale)} />
+        <Reveal>
+          <SectionHeading title={localize('Faaliyet Alanlarımız', 'Our Areas of Activity', locale)} />
+        </Reveal>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {FOCUS_AREAS.map((area) => (
-            <Card key={area.tr} className="text-center">
-              <p className="font-medium text-dark">{localize(area.tr, area.en, locale)}</p>
-            </Card>
+          {FOCUS_AREAS.map((area, i) => (
+            <Reveal key={area.title_tr} delay={i * 0.08}>
+              <Link href="/alanlarimiz" className="block h-full">
+                <Card className="flex h-full min-h-[7rem] items-center justify-center text-center transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_rgba(255,107,53,0.45)]">
+                  <p className="font-medium text-dark">{localize(area.title_tr, area.title_en, locale)}</p>
+                </Card>
+              </Link>
+            </Reveal>
           ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link href="/alanlarimiz" className="font-semibold text-primary">
-            {localize('Tüm Alanlar →', 'All Areas →', locale)}
-          </Link>
         </div>
       </section>
 
       <section className="gradient-primary px-6 py-16 text-center text-white">
-        <h2 className="font-display text-2xl font-bold">
-          {localize('Siz de Bize Katılın!', 'Join Us Too!', locale)}
-        </h2>
-        <Link href="/destek-ol" className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-semibold text-primary">
-          {localize('Destek Ol', 'Support Us', locale)}
-        </Link>
+        <Reveal>
+          <h2 className="font-display text-2xl font-bold">
+            {localize('Siz de Bize Katılın!', 'Join Us Too!', locale)}
+          </h2>
+          <Link href="/destek-ol" className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-semibold text-primary">
+            {localize('Destek Ol', 'Support Us', locale)}
+          </Link>
+        </Reveal>
       </section>
     </>
   )
