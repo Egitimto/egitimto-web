@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
+import { FaApple } from 'react-icons/fa6'
 import { getLocale } from '@/lib/i18n/locale'
 import { localize } from '@/lib/i18n/localize'
 import { APPS } from '@/content/apps'
@@ -30,6 +31,16 @@ export default async function UygulamaDetayPage({ params }: { params: Promise<{ 
 
   const features = parseFeatures(localize(app.features_tr, app.features_en, locale))
   const deleteDataSubject = localize('Kişisel Verilerimin Silinmesi', 'Deletion of My Personal Data', locale)
+
+  const appStoreBadge = (
+    <>
+      <FaApple className="h-8 w-8" />
+      <span className="flex flex-col items-start leading-none">
+        <span className="text-[10px]">{localize("App Store'dan", 'Download on the', locale)}</span>
+        <span className="-mt-0.5 text-xl font-semibold">{localize('İndirin', 'App Store', locale)}</span>
+      </span>
+    </>
+  )
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-16">
@@ -90,15 +101,24 @@ export default async function UygulamaDetayPage({ params }: { params: Promise<{ 
             />
           </a>
         )}
-        {app.appStoreUrl && (
+        {app.appStoreUrl ? (
           <a
             href={app.appStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-14 items-center rounded-xl bg-dark px-5 font-semibold text-white"
+            className="flex h-14 items-center gap-2 rounded-xl bg-black px-4 text-white transition-transform hover:scale-[1.02]"
           >
-            App Store
+            {appStoreBadge}
           </a>
+        ) : (
+          <div className="relative">
+            <span className="absolute -top-2 -left-2 z-10 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
+              {localize('Yakında', 'Coming Soon', locale)}
+            </span>
+            <span className="flex h-14 cursor-not-allowed items-center gap-2 rounded-xl bg-neutral-300 px-4 text-neutral-500">
+              {appStoreBadge}
+            </span>
+          </div>
         )}
       </div>
 

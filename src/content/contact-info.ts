@@ -1,5 +1,6 @@
 export const CONTACT_INFO = {
   address: 'Fahrettin Altay, 65/20. Sk. No:14A, 35140 Karabağlar/İzmir',
+  phone: '+90 542 630 5735',
   email: 'info@egitimto.org',
   collaborationEmail: 'info@egitimto.org',
   ethicsEmail: 'etik@egitimto.org',

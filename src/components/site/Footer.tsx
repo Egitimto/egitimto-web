@@ -27,6 +27,7 @@ export function Footer({ locale }: { locale: Locale }) {
             <ul className="space-y-2 text-sm">
               <li>{CONTACT_INFO.address}</li>
               <li>{CONTACT_INFO.email}</li>
+              <li>{CONTACT_INFO.phone}</li>
               <li>{localize('Dernek Kütük No', 'Registry No', locale)}: {CONTACT_INFO.registryNumber}</li>
             </ul>
           </div>

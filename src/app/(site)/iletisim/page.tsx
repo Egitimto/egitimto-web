@@ -32,6 +32,10 @@ export default async function IletisimPage({
             <dd>{CONTACT_INFO.email}</dd>
           </div>
           <div>
+            <dt className="font-semibold text-dark">{localize('Telefon', 'Phone', locale)}</dt>
+            <dd>{CONTACT_INFO.phone}</dd>
+          </div>
+          <div>
             <dt className="font-semibold text-dark">{localize('Çalışma Saatleri', 'Working Hours', locale)}</dt>
             <dd>{localize(CONTACT_INFO.hours.tr, CONTACT_INFO.hours.en, locale)}</dd>
           </div>
