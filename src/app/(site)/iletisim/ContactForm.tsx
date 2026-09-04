@@ -20,17 +20,21 @@ export function ContactForm({ locale, defaultSubject }: { locale: Locale; defaul
 
   return (
     <form action={formAction} className="space-y-4">
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: 0, height: 0, overflow: 'hidden' }}>
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium text-body-text">
           {localize('Adınız Soyadınız', 'Your Full Name', locale)}
         </label>
-        <input id="fullName" name="fullName" required className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2" />
+        <input id="fullName" name="fullName" required maxLength={200} className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2" />
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-body-text">
           {localize('E-posta Adresi', 'Email Address', locale)}
         </label>
-        <input id="email" name="email" type="email" required className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2" />
+        <input id="email" name="email" type="email" required maxLength={254} className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2" />
       </div>
       <div>
         <label htmlFor="subject" className="block text-sm font-medium text-body-text">
@@ -54,7 +58,7 @@ export function ContactForm({ locale, defaultSubject }: { locale: Locale; defaul
         <label htmlFor="message" className="block text-sm font-medium text-body-text">
           {localize('Mesajınız', 'Your Message', locale)}
         </label>
-        <textarea id="message" name="message" required rows={5} className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2" />
+        <textarea id="message" name="message" required rows={5} maxLength={5000} className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2" />
       </div>
       <label className="flex items-start gap-2 text-sm text-body-text">
         <input type="checkbox" required className="mt-1" />
