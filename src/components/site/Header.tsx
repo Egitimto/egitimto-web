@@ -26,23 +26,25 @@ export function Header({ locale }: { locale: Locale }) {
           </span>
           <span className="font-display text-lg font-bold text-white">Eğitim Teknoloji ve Oyun Derneği</span>
         </Link>
-        <nav className="hidden items-center gap-6 md:flex" aria-label="Ana menü">
-          <NavDropdown label={localize('EğitimTO', 'EğitimTO', locale)} items={egitimtoItems} />
-          <NavDropdown label={localize('Duyurular', 'Announcements', locale)} items={duyurularItems} />
-          <Link href="/uygulamalarimiz" className="text-sm font-medium text-white/90 hover:text-white">
-            {localize('Uygulamalarımız', 'Our Apps', locale)}
-          </Link>
-          <Link href="/alanlarimiz" className="text-sm font-medium text-white/90 hover:text-white">
-            {localize('Alanlarımız', 'Our Focus Areas', locale)}
-          </Link>
-          <Link href="/destek-ol" className="text-sm font-medium text-white/90 hover:text-white">
-            {localize('Destek Ol', 'Support Us', locale)}
-          </Link>
-          <Link href="/iletisim" className="text-sm font-medium text-white/90 hover:text-white">
-            {localize('İletişim', 'Contact', locale)}
-          </Link>
-        </nav>
-        <LocaleSwitcher locale={locale} />
+        <div className="flex items-center gap-8">
+          <nav className="hidden items-center gap-6 md:flex" aria-label="Ana menü">
+            <NavDropdown label={localize('EğitimTO', 'EğitimTO', locale)} items={egitimtoItems} />
+            <NavDropdown label={localize('Duyurular', 'Announcements', locale)} items={duyurularItems} />
+            <Link href="/uygulamalarimiz" className="text-sm font-medium text-white/90 hover:text-white">
+              {localize('Uygulamalarımız', 'Our Apps', locale)}
+            </Link>
+            <Link href="/alanlarimiz" className="text-sm font-medium text-white/90 hover:text-white">
+              {localize('Alanlarımız', 'Our Focus Areas', locale)}
+            </Link>
+            <Link href="/destek-ol" className="text-sm font-medium text-white/90 hover:text-white">
+              {localize('Destek Ol', 'Support Us', locale)}
+            </Link>
+            <Link href="/iletisim" className="text-sm font-medium text-white/90 hover:text-white">
+              {localize('İletişim', 'Contact', locale)}
+            </Link>
+          </nav>
+          <LocaleSwitcher locale={locale} />
+        </div>
       </div>
     </header>
   )

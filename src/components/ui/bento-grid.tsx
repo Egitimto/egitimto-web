@@ -44,15 +44,15 @@ const BentoCard = ({ name, className, background, description, href, cta }: Bent
   <Link
     href={href}
     className={cn(
-      'group relative flex flex-col justify-end overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 shadow-sm transition-shadow hover:shadow-md',
+      'group flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-shadow hover:shadow-md',
       className
     )}
   >
-    {background && <div className="absolute inset-0">{background}</div>}
-    <div className="relative z-10 bg-gradient-to-t from-black/75 via-black/25 to-transparent p-4 pt-12">
-      <h3 className="font-display font-bold text-white">{name}</h3>
-      {description && <p className="mt-1 line-clamp-2 text-sm text-white/80">{description}</p>}
-      <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+    <div className="relative min-h-0 flex-1 overflow-hidden bg-neutral-100">{background}</div>
+    <div className="shrink-0 p-4">
+      <h3 className="font-display font-bold text-dark line-clamp-1">{name}</h3>
+      {description && <p className="mt-1 line-clamp-2 text-sm text-body-text">{description}</p>}
+      <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         {cta}
         <ArrowRight className="h-4 w-4" />
       </span>

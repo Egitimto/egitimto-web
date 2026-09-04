@@ -20,6 +20,41 @@ export interface FeaturedItem {
   featured_at: string | null
 }
 
+function hashString(text: string): number {
+  let hash = 0
+  for (let i = 0; i < text.length; i++) {
+    hash = (hash * 31 + text.charCodeAt(i)) | 0
+  }
+  return Math.abs(hash) || 1
+}
+
+function pickIndices(count: number, wordCount: number, seed: number, exclude: Set<number>): number[] {
+  const indices: number[] = []
+  let s = seed
+  let guard = 0
+  while (indices.length < count && guard < 50) {
+    s = (s * 9301 + 49297) % 233280
+    const idx = Math.floor((s / 233280) * wordCount)
+    if (!indices.includes(idx) && !exclude.has(idx)) indices.push(idx)
+    guard++
+  }
+  return indices
+}
+
+/** Deterministically marks a couple of words per title as underlined/highlighted, so the
+ * same title always renders the same way (avoids SSR/CSR hydration mismatch from real randomness). */
+function markTitleWords(title: string) {
+  const words = title.split(' ')
+  const seed = hashString(title)
+  const underlineCount = words.length <= 3 ? 1 : 2
+  const highlightCount = words.length <= 1 ? 0 : words.length <= 4 ? 1 : 2
+
+  const underline = new Set(pickIndices(underlineCount, words.length, seed, new Set()))
+  const highlight = new Set(pickIndices(highlightCount, words.length, seed + 17, underline))
+
+  return { words, underline, highlight }
+}
+
 export function FeaturedShowcase({ items, locale }: { items: FeaturedItem[]; locale: Locale }) {
   const [index, setIndex] = useState(0)
   if (items.length === 0) return null
@@ -28,6 +63,8 @@ export function FeaturedShowcase({ items, locale }: { items: FeaturedItem[]; loc
   const href = item.type === 'haber' ? `/haberler/${item.slug}` : `/etkinlikler/${item.slug}`
   const goPrev = () => setIndex((i) => (i - 1 + items.length) % items.length)
   const goNext = () => setIndex((i) => (i + 1) % items.length)
+  const title = localize(item.title_tr, item.title_en, locale)
+  const { words, underline, highlight } = markTitleWords(title)
 
   return (
     <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
@@ -52,9 +89,22 @@ export function FeaturedShowcase({ items, locale }: { items: FeaturedItem[]; loc
 
       <div className="flex h-full flex-col justify-between gap-10">
         <p className="font-display text-3xl leading-tight font-bold text-dark sm:text-4xl lg:text-5xl">
-          <Highlighter key={item.id} action="highlight" color="#FF8C42">
-            {localize(item.title_tr, item.title_en, locale)}
-          </Highlighter>
+          {words.map((word, i) => (
+            <span key={`${item.id}-${i}`}>
+              {underline.has(i) ? (
+                <Highlighter action="underline" color="#FF8C42" padding={2}>
+                  {word}
+                </Highlighter>
+              ) : highlight.has(i) ? (
+                <Highlighter action="highlight" color="#FFD9B8" padding={2}>
+                  {word}
+                </Highlighter>
+              ) : (
+                word
+              )}
+              {i < words.length - 1 ? ' ' : ''}
+            </span>
+          ))}
         </p>
 
         <div className="flex items-center gap-3 self-start md:self-end">
