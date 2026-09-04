@@ -20,8 +20,8 @@ export default async function AlanlarimizPage() {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {FOCUS_AREAS.map((area, i) => (
-          <Reveal key={area.title_tr} delay={i * 0.1}>
-            <Card>
+          <Reveal key={area.title_tr} delay={i * 0.1} className="h-full">
+            <Card className="flex h-full min-h-[20rem] flex-col">
               <h3 className="font-display font-bold text-dark">{localize(area.title_tr, area.title_en, locale)}</h3>
               <p className="mt-2 text-sm text-body-text">{localize(area.description_tr, area.description_en, locale)}</p>
               <ul className="mt-4 list-inside list-disc space-y-1 text-sm text-body-text">

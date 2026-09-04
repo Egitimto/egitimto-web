@@ -99,14 +99,14 @@ export function FeaturedShowcase({ items, locale }: { items: FeaturedItem[]; loc
           className="group relative mx-auto w-full max-w-md"
         >
           <div className="pointer-events-none absolute inset-0 -z-10 scale-110 rounded-full bg-primary-light/50 blur-[90px] transition-all duration-700 group-hover:scale-125 group-hover:bg-primary-light/70" />
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
+          <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-white shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
             {item.cover_image ? (
               <Image
                 src={item.cover_image}
                 alt=""
                 fill
                 sizes="(min-width: 768px) 400px, 90vw"
-                className="object-cover"
+                className="object-contain"
               />
             ) : (
               <div className="h-full w-full bg-neutral-200" />
